@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CIM FASHION HOUSE — Thời trang Nam & Nữ (30 sản phẩm)</title>
+
+<style>
+/* ================= CSS ================= */
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f5f7fb;color:#1d1d1f}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit;cursor:pointer}
+.hidden{display:none!important}
+
+/* ---------- NAVBAR ---------- */
+.navbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:12px 24px;
+  background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);position:sticky;top:0;z-index:100;
+  box-shadow:0 2px 10px rgba(0,0,0,.35)}
+.logoContainer{color:#fff;font-size:1.2rem;font-weight:800;letter-spacing:1px;white-space:nowrap}
+.logoContainer em{color:#ff9800;font-style:normal}
+.navLinks{display:flex;list-style:none;gap:4px;align-items:center}
+.navLinks>li{position:relative}
+.navLinks a{display:block;color:#e5e7eb;padding:9px 12px;border-radius:8px;font-size:.93rem;font-weight:600;transition:.2s}
+.navLinks a:hover{color:#fff;background:rgba(255,255,255,.12)}
+.dropdownMenu{display:none;position:absolute;top:100%;left:0;min-width:230px;list-style:none;
+  background:#fff;border-radius:10px;box-shadow:0 10px 26px rgba(0,0,0,.2);overflow:hidden;z-index:200}
+.dropdownMenu a{color:#1d1d1f!important;padding:10px 14px}
+.dropdownMenu a:hover{background:#eef4ff;color:#007bff!important}
+.dropdown:hover .dropdownMenu{display:block}
+.searchBar{flex:1;min-width:170px;max-width:330px}
+.searchBar input{width:100%;padding:9px 14px;border:none;border-radius:999px;font-size:.92rem;outline:none}
+.navButtons{display:flex;gap:8px;align-items:center}
+.btnLogin,.btnRegister,.btnMusic{border:none;border-radius:8px;padding:9px 14px;font-weight:700;
+  cursor:pointer;font-size:.9rem;transition:.2s;font-family:inherit}
+.btnLogin{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.6)}
+.btnLogin:hover{background:rgba(255,255,255,.15)}
+.btnRegister{background:#007bff;color:#fff}
+.btnRegister:hover{background:#0063d1}
+.btnMusic{background:rgba(255,255,255,.12);color:#fff;font-size:1rem}
+
+/* ---------- MODAL ---------- */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,20,.65);z-index:1000;
+  align-items:center;justify-content:center;padding:16px}
+.modalBox{position:relative;width:min(380px,94vw);color:#fff;border-radius:16px;padding:30px 26px;
+  background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);box-shadow:0 20px 50px rgba(0,0,0,.5)}
+.modalBox h2{margin-bottom:16px;text-align:center}
+.modalBox input{width:100%;padding:11px 14px;margin-bottom:12px;border:none;border-radius:8px;
+  background:#fff;color:#222;font-size:.95rem}
+.modalBtn{width:100%;padding:12px;border:none;border-radius:8px;background:#007bff;color:#fff;
+  font-weight:700;font-size:1rem;cursor:pointer;transition:.2s;font-family:inherit}
+.modalBtn:hover{background:#0063d1}
+.btnGhost{background:rgba(255,255,255,.15);margin-top:8px}
+.modalClose{position:absolute;top:10px;right:14px;font-size:1.2rem;cursor:pointer}
+.modalNote{text-align:center;font-size:.88rem;margin-top:10px;color:#cbd5e1}
+.modalNote a{color:#4db8ff;font-weight:700}
+
+/* ---------- BANNER SLIDESHOW ---------- */
+.banner{position:relative;height:520px;overflow:hidden;background:#1a1a2e}
+.bannerSlide{position:absolute;inset:0;background-size:cover;background-position:center;
+  opacity:0;transition:opacity 1s ease}
+.bannerSlide.active{opacity:1;animation:zoomSlow 6s ease forwards}
+@keyframes zoomSlow{from{transform:scale(1.05)}to{transform:scale(1)}}
+.bannerContent{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;color:#fff;padding:20px;z-index:5;
+  background:linear-gradient(180deg,rgba(0,0,0,.55),rgba(0,0,0,.25),rgba(0,0,0,.65))}
+.bannerContent h1{font-size:clamp(1.6rem,4.5vw,3rem);letter-spacing:2px;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.bannerContent p{margin:14px 0 22px;font-size:1.05rem;max-width:660px;text-shadow:0 1px 8px rgba(0,0,0,.6)}
+.bannerArrow{position:absolute;top:50%;transform:translateY(-50%);z-index:7;
+  width:52px;height:52px;border:none;border-radius:50%;cursor:pointer;
+  background:rgba(255,255,255,.18);color:#fff;font-size:1.5rem;
+  display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);transition:.25s;font-family:inherit}
+.bannerArrow:hover{background:rgba(255,255,255,.45);transform:translateY(-50%) scale(1.12)}
+.bannerArrow.prev{left:18px}
+.bannerArrow.next{right:18px}
+.bannerPlay{position:absolute;right:18px;bottom:16px;z-index:7;width:42px;height:42px;
+  border:none;border-radius:50%;cursor:pointer;background:rgba(255,255,255,.18);
+  color:#fff;font-size:1.05rem;backdrop-filter:blur(4px);transition:.25s;font-family:inherit}
+.bannerPlay:hover{background:rgba(255,255,255,.45);transform:scale(1.12)}
+.bannerDots{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:6}
+.bannerDots span{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,.45);cursor:pointer;transition:.2s}
+.bannerDots span.active{background:#ff9800;transform:scale(1.25)}
+
+/* ---------- STATS ---------- */
+.stats{display:flex;justify-content:center;gap:22px;flex-wrap:wrap;padding:36px 16px;
+  background:linear-gradient(135deg,#1a1a2e,#0f3460)}
+.statBox{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:14px;
+  padding:20px 34px;text-align:center;color:#fff;min-width:210px}
+.statNum{font-size:2rem;font-weight:800;color:#ff9800}
+.statBox p{margin-top:4px;font-size:.93rem;color:#d1d5db}
+
+/* ---------- SẢN PHẨM (card) ---------- */
+.productSection{max-width:1250px;margin:0 auto;padding:34px 16px 10px}
+.sectionTitle{font-size:1.45rem;letter-spacing:1px;margin-bottom:18px;border-left:5px solid #ff9800;padding-left:12px}
+.secNote{color:#6b7280;margin:-8px 0 14px;font-size:.92rem}
+.searchResult{margin:-8px 0 12px;color:#007bff;font-weight:600}
+.productContainer{display:flex;flex-wrap:wrap;gap:20px;justify-content:center}
+.productCard{position:relative;width:262px;background:linear-gradient(150deg,#fff,#eef3ff);
+  border-radius:14px;padding:14px 14px 12px;box-shadow:0 2px 10px rgba(0,0,0,.08);
+  transition:.25s;display:flex;flex-direction:column;gap:8px}
+.productCard:hover{transform:translateY(-6px);box-shadow:0 0 18px rgba(0,255,255,.5),0 10px 24px rgba(0,0,0,.12)}
+.productCard img{width:100%;height:270px;object-fit:cover;border-radius:10px;cursor:pointer;transition:.3s}
+.productCard img:hover{transform:scale(1.02)}
+.cardName{font-size:1rem;line-height:1.35;cursor:pointer;font-weight:700}
+.cardName:hover{color:#007bff}
+.saleTag{position:absolute;top:22px;left:22px;background:#e63946;color:#fff;font-size:.78rem;
+  font-weight:800;padding:3px 9px;border-radius:999px;z-index:2}
+.pDesc{font-size:.85rem;color:#6b7280;line-height:1.45;min-height:40px}
+.pPrice{display:flex;align-items:center;gap:8px}
+.pNew{color:#ff9800;font-weight:800;font-size:1.12rem}
+.pOld{color:#9ca3af;text-decoration:line-through;font-size:.83rem}
+.buyBtn{width:100%;padding:11px;border:none;border-radius:9px;background:linear-gradient(135deg,#ff9800,#ff5722);
+  color:#fff;font-weight:800;font-size:.95rem;cursor:pointer;transition:.2s;font-family:inherit}
+.buyBtn:hover{transform:scale(1.03);box-shadow:0 6px 16px rgba(255,152,0,.5)}
+.iconBox{display:flex;justify-content:center;gap:14px;opacity:0;transform:translateY(6px);transition:.25s;height:30px}
+.productCard:hover .iconBox{opacity:1;transform:translateY(0)}
+.iconBox span{font-size:1.25rem;cursor:pointer;transition:.2s;filter:grayscale(.4)}
+.iconBox span:hover{transform:scale(1.1);filter:none}
+.iconBox span.active{filter:none;transform:scale(1.15)}
+
+/* ---------- TRANG CHI TIẾT SẢN PHẨM ---------- */
+.breadcrumb{max-width:1150px;margin:18px auto 0;padding:0 16px;font-size:.92rem;color:#6b7280}
+.breadcrumb a:hover{color:#007bff}
+.detailWrap{max-width:1150px;margin:14px auto 30px;padding:0 16px;
+  display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
+
+/* Gallery */
+.dGallery{background:#fff;border-radius:16px;padding:16px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.dMain{position:relative;width:100%;aspect-ratio:3/4;border-radius:12px;overflow:hidden;background:#f1f2f6}
+.dMain img{width:100%;height:100%;object-fit:cover}
+.dMain .saleTag{top:14px;left:14px}
+.dThumbs{display:flex;gap:10px;margin-top:12px;justify-content:center}
+.dThumbs img{width:76px;height:96px;object-fit:cover;border-radius:8px;cursor:pointer;
+  border:2px solid transparent;transition:.2s}
+.dThumbs img:hover{transform:translateY(-3px)}
+.dThumbs img.active{border-color:#ff9800;box-shadow:0 0 8px rgba(255,152,0,.5)}
+
+/* Info */
+.dInfo h1{font-size:1.5rem;line-height:1.3}
+.dCode{color:#9ca3af;font-size:.9rem;margin:4px 0 2px}
+.dStars{color:#f5a623;font-size:.95rem}
+.dPriceBox{background:#fff6f0;border:1.5px dashed #ffc89e;border-radius:12px;padding:16px;margin:14px 0}
+.dPriceBox .pNew{font-size:1.9rem}
+.dPriceBox .pOld{font-size:1rem}
+.dTagSale{background:#e63946;color:#fff;font-size:.8rem;font-weight:800;padding:3px 10px;border-radius:999px;margin-left:8px}
+.dDesc{color:#374151;margin:10px 0 14px;line-height:1.6}
+.dTable{width:100%;border-collapse:collapse;font-size:.93rem;margin-bottom:14px}
+.dTable th{width:120px;text-align:left;background:#f3f4f6;padding:8px 10px;border:1px solid #e5e7eb}
+.dTable td{padding:8px 10px;border:1px solid #e5e7eb;background:#fff}
+.optLabel{font-weight:700;margin:14px 0 8px;display:block}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{padding:.45rem 1rem;border:1.5px solid #dbe2ef;border-radius:8px;cursor:pointer;background:#fff;font-family:inherit;font-size:.92rem;transition:.15s}
+.chip:hover{border-color:#007bff}
+.chip.active{border-color:#ff9800;color:#c96a00;background:#fff4e5;font-weight:800}
+.dot{display:inline-block;width:14px;height:14px;border-radius:50%;margin-right:6px;border:1px solid rgba(0,0,0,.2);vertical-align:-2px}
+.sizeLink{color:#007bff;cursor:pointer;font-weight:700;font-size:.88rem;margin-left:10px}
+.sizeTableBox{background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.08);
+  margin-top:12px;padding:14px;max-width:520px}
+.sizeTableBox table{width:100%;border-collapse:collapse;font-size:.9rem}
+.sizeTableBox th{background:#1a1a2e;color:#fff;padding:8px;font-size:.85rem}
+.sizeTableBox td{border:1px solid #e5e7eb;padding:7px;text-align:center}
+.buyRow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px}
+.qtyGroup{display:inline-flex;border:1.5px solid #dbe2ef;border-radius:10px;overflow:hidden;background:#fff}
+.qtyGroup button{width:42px;height:46px;border:none;background:#f3f4f6;font-size:1.2rem;cursor:pointer}
+.qtyGroup button:hover{background:#e5e7eb}
+.qtyGroup input{width:54px;text-align:center;border:none;font-size:1.05rem;font-weight:800;height:46px}
+.dBtnCart{padding:13px 22px;border:none;border-radius:10px;cursor:pointer;font-weight:800;
+  font-size:1rem;font-family:inherit;transition:.2s}
+.btnBuy1{background:linear-gradient(135deg,#ff9800,#ff5722);color:#fff}
+.btnBuy1:hover{box-shadow:0 6px 16px rgba(255,152,0,.5)}
+.btnBuy2{background:#1a1a2e;color:#fff}
+.btnBuy2:hover{background:#000}
+.dMinis{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px;font-size:.88rem;color:#4b5563}
+.dBack{display:inline-block;margin-bottom:10px;color:#007bff;font-weight:700;cursor:pointer}
+
+/* ---------- GIỎ HÀNG ---------- */
+.cartWrap{max-width:1050px;margin:26px auto;padding:0 16px}
+.cartWrap h1{margin-bottom:18px}
+.cart-table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;
+  box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.cart-table th{background:linear-gradient(135deg,#1a1a2e,#0f3460);color:#fff;padding:12px 8px;font-size:.9rem}
+.cart-table td{border-bottom:1px solid #e5e7eb;padding:10px 8px;text-align:center;vertical-align:middle;font-size:.95rem}
+.cart-prod{display:flex;align-items:center;gap:12px;text-align:left}
+.cart-prod img{width:64px;height:84px;object-fit:cover;border-radius:8px}
+.qtyBtn{width:32px;height:32px;border:none;border-radius:7px;background:linear-gradient(135deg,#007bff,#00c6ff);
+  color:#fff;font-weight:800;cursor:pointer;font-size:1rem}
+.qtyNum{width:38px;text-align:center;font-weight:800;display:inline-block}
+.delete-btn{background:#ff4d4d;color:#fff;border:none;padding:7px 14px;border-radius:8px;cursor:pointer;font-weight:700;font-family:inherit}
+.delete-btn:hover{background:#e03131}
+.emptyCart{text-align:center;padding:50px;font-size:1.15rem;color:#6b7280;background:#fff;border-radius:12px}
+
+/* ---------- THANH TOÁN ---------- */
+.checkoutBox{background:linear-gradient(150deg,#fff,#eef3ff);border-radius:14px;padding:24px;
+  margin-top:24px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.checkoutBox h2{margin-bottom:14px;font-size:1.2rem}
+.checkoutBox input:not([type=radio]),.checkoutBox textarea{width:100%;padding:11px 14px;margin-bottom:10px;
+  border:1.5px solid #dbe2ef;border-radius:9px;font-size:.95rem;font-family:inherit;background:#fff}
+.checkoutBox input:focus,.checkoutBox textarea:focus{outline:none;border-color:#007bff}
+.shipOpt{display:block;background:#fff;border:1.5px solid #dbe2ef;border-radius:9px;padding:11px 14px;margin-bottom:10px;cursor:pointer}
+.shipOpt:has(input:checked){border-color:#007bff;background:#e8f1ff}
+.addrRow{display:flex;gap:10px}
+.addrRow input{flex:1}
+#gpsBtn{height:44px;padding:0 16px;border:none;border-radius:9px;background:#007bff;color:#fff;
+  font-weight:700;cursor:pointer;margin-bottom:10px;font-family:inherit}
+.cart-totals{margin:14px 0}
+.totRow{display:flex;justify-content:space-between;padding:7px 0;font-size:.97rem}
+.totRow.grand{border-top:2px solid #1d1d1f;font-weight:800;font-size:1.15rem;color:#ff9800}
+.checkoutBtn{width:100%;padding:14px;border:none;border-radius:10px;background:linear-gradient(135deg,#ff9800,#ff5722);
+  color:#fff;font-weight:800;font-size:1.05rem;cursor:pointer;transition:.2s;font-family:inherit}
+.checkoutBtn:disabled{opacity:.5;cursor:not-allowed}
+
+/* ---------- FOOTER ---------- */
+footer{margin-top:46px}
+.footerContainer{display:flex;flex-wrap:wrap;gap:26px;justify-content:space-between;
+  background:linear-gradient(180deg,#fff,#e9edf5);padding:38px 40px 30px}
+.footerCol{flex:1;min-width:210px}
+.footerCol h4{margin-bottom:12px;font-size:1rem}
+.footerCol a{display:block;padding:5px 0;color:#374151;font-size:.93rem;transition:.2s;transform-origin:left}
+.footerCol a:hover{color:#007bff;transform:scale(1.2)}
+.footerBottom{background:#101418;color:#9ca3af;text-align:center;padding:16px;font-size:.87rem}
+
+#toast{position:fixed;top:80px;left:50%;transform:translateX(-50%) translateY(-14px);background:#111827;
+  color:#fff;padding:12px 20px;border-radius:10px;opacity:0;pointer-events:none;transition:.3s;z-index:2000;font-size:.93rem}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media(max-width:860px){
+  .navbar{justify-content:center}.searchBar{order:5;max-width:100%;flex-basis:100%}
+  .banner{height:400px}.footerCol{min-width:45%}
+  .detailWrap{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  .bannerArrow{width:38px;height:38px;font-size:1.1rem}
+  .bannerArrow.prev{left:8px}.bannerArrow.next{right:8px}
+  .cart-table th:nth-child(2),.cart-table td:nth-child(2),
+  .cart-table th:nth-child(3),.cart-table td:nth-child(3){display:none}
+  .addrRow{flex-direction:column}
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar">
+  <a class="logoContainer" onclick="showView('home')">👑 <b><em>CIM</em> FASHION HOUSE</b></a>
+  <ul class="navLinks">
+    <li><a onclick="showView('home')">Trang chủ</a></li>
+    <li class="dropdown">
+      <a>Sản phẩm ▾</a>
+      <ul class="dropdownMenu">
+        <li><a onclick="gotoSection('allSection')">Tất cả sản phẩm (30)</a></li>
+        <li><a onclick="gotoSection('menSection')">Thời trang Nam (15)</a></li>
+        <li><a onclick="gotoSection('womenSection')">Thời trang Nữ (15)</a></li>
+        <li><a onclick="gotoSection('newSection')">Hàng mới về</a></li>
+        <li><a onclick="gotoSection('saleSection')">Khuyến mãi (15)</a></li>
+      </ul>
+    </li>
+    <li class="dropdown">
+      <a>Liên hệ ▾</a>
+      <ul class="dropdownMenu">
+        <li><a>📞 Hotline: 0901 234 567</a></li>
+        <li><a>✉️ cimfashionhouse@gmail.com</a></li>
+        <li><a href="https://facebook.com" target="_blank">📘 Facebook</a></li>
+        <li><a>📍 45 Lê Lợi, Q.1, TP.HCM</a></li>
+      </ul>
+    </li>
+    <li><a onclick="showView('cart')">Giỏ hàng 🛒 (<span id="cartNavCount">0</span>)</a></li>
+  </ul>
+  <div class="searchBar">
+    <input id="searchInput" type="text" placeholder="Tìm áo, quần, váy, hoodie..." onkeyup="searchProducts()">
+  </div>
+  <div class="navButtons">
+    <button class="btnLogin" onclick="openModal('loginModal')">Đăng nhập</button>
+    <button class="btnRegister" onclick="openModal('registerModal')">Đăng ký</button>
+    <button class="btnMusic" id="musicBtn" onclick="toggleMusicBtn()">🎵</button>
+  </div>
+</nav>
+
+<!-- ================= MODALS ================= -->
+<div class="modal" id="loginModal">
+  <div class="modalBox">
+    <span class="modalClose" onclick="closeModal('loginModal')">✕</span>
+    <h2>🔐 Đăng nhập</h2>
+    <form id="loginForm">
+      <input type="text" id="loginUser" placeholder="Tên đăng nhập">
+      <input type="password" id="loginPass" placeholder="Mật khẩu">
+      <button type="submit" class="modalBtn">Đăng nhập</button>
+      <p class="modalNote">Chưa có tài khoản? <a onclick="closeModal('loginModal');openModal('registerModal')">Đăng ký ngay</a></p>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="registerModal">
+  <div class="modalBox">
+    <span class="modalClose" onclick="closeModal('registerModal')">✕</span>
+    <h2>📝 Đăng ký tài khoản</h2>
+    <form id="registerForm">
+      <input type="text" id="regUser" placeholder="Tên đăng nhập">
+      <input type="email" id="regEmail" placeholder="Email (VD: abc@gmail.com)">
+      <input type="password" id="regPass" placeholder="Mật khẩu (tối thiểu 6 ký tự)">
+      <input type="password" id="regConfirm" placeholder="Xác nhận mật khẩu">
+      <button type="submit" class="modalBtn">Đăng ký</button>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="musicModal">
+  <div class="modalBox">
+    <span class="modalClose" onclick="closeModal('musicModal')">✕</span>
+    <h2>🎵 Nhạc nền</h2>
+    <p style="margin:12px 0">Bạn có muốn bật nhạc nền khi mua sắm tại CIM FASHION HOUSE không?</p>
+    <button class="modalBtn" onclick="musicChoice(true)">🎼 Bật nhạc</button>
+    <button class="modalBtn btnGhost" onclick="musicChoice(false)">🔕 Để sau</button>
+  </div>
+</div>
+
+<!-- ================= MÀN HÌNH 1: TRANG CHỦ ================= -->
+<div id="viewHome">
+
+  <section class="banner">
+    <div class="bannerSlide active" style="background-image:url('https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&w=1600&q=70')"></div>
+    <div class="bannerSlide" style="background-image:url('https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1600&q=70')"></div>
+    <div class="bannerSlide" style="background-image:url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1600&q=70')"></div>
+    <div class="bannerSlide" style="background-image:url('https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=1600&q=70')"></div>
+    <div class="bannerContent">
+      <h1>CIM FASHION HOUSE — BỘ SƯU TẬP 2025</h1>
+      <p>30+ mẫu thời trang nam &amp; nữ · <b style="color:#ff9800">15 sản phẩm khuyến mãi đến 25%</b> · Freeship từ 500.000đ!</p>
+    </div>
+    <button class="bannerArrow prev" onclick="prevSlide()">❮</button>
+    <button class="bannerArrow next" onclick="nextSlide()">❯</button>
+    <button class="bannerPlay" id="slideToggleBtn" onclick="toggleSlide()">⏸</button>
+    <div class="bannerDots" id="bannerDots"></div>
+  </section>
+
+  <section class="stats">
+    <div class="statBox"><span class="statNum" id="statCust">0</span><p>👥 Khách hàng tin dùng</p></div>
+    <div class="statBox"><span class="statNum" id="statOrder">0</span><p>📦 Đơn hàng hoàn thành</p></div>
+    <div class="statBox"><span class="statNum" id="statOnline">0</span><p>🟢 Người dùng đang online</p></div>
+  </section>
+
+  <section class="productSection" id="newSection">
+    <h2 class="sectionTitle">🔥 Hàng mới về</h2>
+    <div class="productContainer" id="newContainer"></div>
+  </section>
+
+  <section class="productSection" id="hotSection">
+    <h2 class="sectionTitle">⭐ Sản phẩm nổi bật</h2>
+    <p class="secNote">Mới 6 + Nổi bật 6 = 12 sản phẩm · thêm 15 sản phẩm khuyến mãi bên dưới</p>
+    <div class="productContainer" id="hotContainer"></div>
+  </section>
+
+  <section class="productSection" id="saleSection">
+    <h2 class="sectionTitle">🏷️ Khuyến mãi hot — 15 sản phẩm giảm đến 25%</h2>
+    <p class="secNote">⏰ 01/12/2025 → 31/12/2025 · mã <b>CIM15</b> giảm thêm 15k cho đơn từ 300k</p>
+    <div class="productContainer" id="saleContainer"></div>
+  </section>
+
+  <section class="productSection" id="menSection">
+    <h2 class="sectionTitle">👨 Thời trang Nam (15)</h2>
+    <div class="productContainer" id="menContainer"></div>
+  </section>
+
+  <section class="productSection" id="womenSection">
+    <h2 class="sectionTitle">👩 Thời trang Nữ (15)</h2>
+    <div class="productContainer" id="womenContainer"></div>
+  </section>
+
+  <section class="productSection" id="allSection">
+    <h2 class="sectionTitle">🛍️ Tất cả sản phẩm (30)</h2>
+    <p class="searchResult" id="searchResult"></p>
+    <div class="productContainer" id="allContainer"></div>
+  </section>
+
+</div>
+
+<!-- ================= MÀN HÌNH 2: CHI TIẾT SẢN PHẨM ================= -->
+<div id="viewDetail" class="hidden">
+  <div class="breadcrumb">
+    <a onclick="showView('home')">Trang chủ</a> / <span id="dBreadcrumb">Sản phẩm</span>
+  </div>
+  <div id="detailBody"></div>
+</div>
+
+<!-- ================= MÀN HÌNH 3: GIỎ HÀNG ================= -->
+<div id="viewCart" class="hidden">
+  <main class="cartWrap">
+    <h1>🛒 Giỏ hàng của bạn</h1>
+    <div id="cartContent"></div>
+    <div class="checkoutBox">
+      <h2>💳 Thông tin thanh toán</h2>
+      <label class="shipOpt">
+        <input type="radio" name="ship" value="home" checked onchange="updateShippingMethod()">
+        🚚 Giao tận nhà (+20.000đ)
+      </label>
+      <label class="shipOpt">
+        <input type="radio" name="ship" value="store" onchange="updateShippingMethod()">
+        🏬 Nhận tại cửa hàng (Miễn phí)
+      </label>
+      <div id="addressBlock">
+        <input id="custName"  placeholder="Họ và tên * (chỉ chữ cái và khoảng trắng)">
+        <input id="custPhone" placeholder="Số điện thoại * (VD: 0901234567)">
+        <div class="addrRow">
+          <input id="custAddress" placeholder="Địa chỉ nhận hàng * (10–100 ký tự)">
+          <button type="button" id="gpsBtn" onclick="getLocation()">📍 GPS</button>
+        </div>
+      </div>
+      <textarea id="custNote" rows="2" placeholder="Ghi chú đơn hàng (tối đa 200 ký tự)"></textarea>
+      <div class="cart-totals" id="cartTotals"></div>
+      <button class="checkoutBtn" id="checkoutBtn" onclick="checkout()">✔ THANH TOÁN</button>
+    </div>
+  </main>
+</div>
+
+<!-- ================= MÀN HÌNH 4: XÁC NHẬN ĐƠN ================= -->
+<div id="viewOrder" class="hidden">
+  <main class="cartWrap">
+    <h1>🎉 Xác nhận đơn hàng</h1>
+    <div id="orderDetail"></div>
+  </main>
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="footerContainer">
+    <div class="footerCol">
+      <h4>🌐 Mạng xã hội</h4>
+      <a href="https://facebook.com" target="_blank">📘 Facebook</a>
+      <a href="https://discord.com" target="_blank">🎮 Discord</a>
+      <a href="https://leetcode.com" target="_blank">💻 LeetCode</a>
+    </div>
+    <div class="footerCol">
+      <h4>💳 Ví điện tử</h4>
+      <a>🏦 Ngân hàng: VCB 0123456789</a>
+      <a>📱 Ví điện tử: MoMo / ZaloPay</a>
+      <a>🔒 Thanh toán an toàn SSL</a>
+    </div>
+    <div class="footerCol">
+      <h4>🛠️ Dịch vụ</h4>
+      <a>📦 Đặt trước hàng mới</a>
+      <a>♻️ Mua đồ cũ</a>
+      <a>🧵 Sửa chữa quần áo</a>
+    </div>
+    <div class="footerCol">
+      <h4>🕘 Lịch sử</h4>
+      <a onclick="showView('cart')">💰 Thanh toán</a>
+      <a onclick="showOrder()">📋 Đơn hàng</a>
+      <a onclick="showView('cart')">🛒 Giỏ hàng hiện tại</a>
+    </div>
+  </div>
+  <div class="footerBottom">© 2025 CIM FASHION HOUSE — 45 Lê Lợi, Q.1, TP.HCM — Hotline 0901 234 567</div>
+</footer>
+
+<div id="toast"></div>
+
+<script>
+/* ============================================================
+   DỮ LIỆU — 30 SẢN PHẨM (kèm màu, size, bảng size, chất liệu)
+============================================================ */
+const PRODUCTS=[
+/* ----- NAM (1-15) ----- */
+{id:1, cat:"nam",type:"ao",name:"Áo Hoodie Nam Basic",price:299000,old:399000,sale:25,mat:"Nỉ bông cotton 350gsm",org:"Việt Nam",img:"https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=600&q=70",desc:"Nỉ bông 350gsm mềm mại, giữ nhiệt tốt, form regular dễ phối jeans hoặc jogger. Năng áo in logo CIS thêu tinh tế, bo tay bo gấm kín gió.",colors:[["Đen","#232323"],["Trắng","#ffffff"],["Xám","#9aa0a6"]]},
+{id:2, cat:"nam",type:"ao",name:"Áo Thun Nam Cotton 100%",price:159000,old:199000,sale:20,mat:"Cotton 100% (180gsm)",org:"Việt Nam",img:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=600&q=70",desc:"Cotton 100% thoáng mát, thấm hút mồ hôi tốt. Form regular chuẩn dáng người Việt, đường may chắc chắn, bền màu sau nhiều lần giặt.",colors:[["Đen","#232323"],["Trắng","#ffffff"],["Navy","#23345e"],["Đỏ","#c0392b"]]},
+{id:3, cat:"nam",type:"ao",name:"Áo Sơ Mi Nam Dài Tay",price:287000,old:359000,sale:20,mat:"Cotton 95% + Spandex 5%",org:"Vải nhập Hàn Quốc",img:"https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=600&q=70",desc:"Sơ mi dài tay lên form chuẩn, vải co giãn nhẹ vận động thoải mái. Phù hợp đi làm, đi tiệc; xắn tay tạo phong cách trẻ trung lịch lãm.",colors:[["Trắng","#ffffff"],["Xám","#9aa0a6"],["Navy","#23345e"]]},
+{id:4, cat:"nam",type:"quanNam",name:"Quần Jeans Nam Slimfit",price:374000,old:499000,sale:25,mat:"Denim 98% cotton + 2% elastane",org:"Việt Nam",img:"https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=600&q=70",desc:"Jeans slimfit denim co giãn nhẹ, ống hơi ôm tôn dáng chân dài. Đũng vừa, dễ phối áo thun, sơ mi hay hoodie.",colors:[["Xanh chàm","#3b5f8a"],["Đen","#232323"]]},
+{id:5, cat:"nam",type:"quanNam",name:"Quần Kaki Nam Cơ Bản",price:263000,old:329000,sale:20,mat:"Kaki cotton dày 280gsm",org:"Việt Nam",img:"https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=600&q=70",desc:"Kaki đứng phơm, vải dày ít nhăn. Thanh lịch cho công sở hoặc dạo phố, dễ phối sơ mi, polo.",colors:[["Be","#d8c3a5"],["Đen","#232323"],["Xanh oliu","#6b7a3a"]]},
+{id:6, cat:"nam",type:"quanNam",name:"Quần Shorts Nam Thoáng Mát",price:175000,old:219000,sale:20,mat:"Cotton twill nhẹ",org:"Việt Nam",img:"https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=600&q=70",desc:"Shorts cotton thoáng cho mùa hè, eo chun + dây rút tiện lợi. Túi hông sâu, hợp đi chơi, thể thao, đi biển.",colors:[["Đen","#232323"],["Be","#d8c3a5"],["Navy","#23345e"]]},
+{id:7, cat:"nam",type:"ao",name:"Áo Polo Nam Pique",price:207000,old:259000,sale:20,mat:"Pique cotton 100%",org:"Việt Nam",img:"https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=600&q=70",desc:"Polo vải pique thoáng khí, cổ đứng giữ form sau nhiều lần giặt. Thể thao mà vẫn lịch lãm, hợp đi làm, golf, cà phê.",colors:[["Đen","#232323"],["Navy","#23345e"],["Trắng","#ffffff"],["Đỏ","#c0392b"]]},
+{id:8, cat:"nam",type:"ao",name:"Áo Khoác Bomber Nam",price:559000,old:699000,sale:20,mat:"Nylon chống nước + lót lưới",org:"Vải nhập Đài Loan",img:"https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=600&q=70",desc:"Bomber oversize trẻ trung, vải ngoài chống nước nhẹ, trong lưới thoáng khí. Bo tay bo gấm kín gió — item thu đông bắt buộc.",colors:[["Đen","#232323"],["Xanh oliu","#6b7a3a"],["Navy","#23345e"]]},
+{id:9, cat:"nam",type:"jogger",name:"Quần Jogger Nam Thể Thao",price:297000,old:349000,sale:15,mat:"Poly + Cotton co giãn 4 chiều",org:"Việt Nam",img:"https://images.unsplash.com/photo-1552902865-b72c031ac5ea?auto=format&fit=crop&w=600&q=70",desc:"Jogger nỉ nhẹ co giãn 4 chiều, bo gấu chân tiện vận động. Hợp gym, chạy bộ, thể thao và mặc thường ngày.",colors:[["Đen","#232323"],["Xám","#9aa0a6"],["Navy","#23345e"]]},
+{id:10,cat:"nam",type:"ao",name:"Áo Cardigan Nam Dệt Kim",price:367000,old:459000,sale:20,mat:"Len dệt kim mềm",org:"Việt Nam",img:"https://images.unsplash.com/photo-1434389677669-e08b4cac3105?auto=format&fit=crop&w=600&q=70",desc:"Cardigan len dệt kim mềm ấm, mặc ngoài áo thun cực trẻ trung. Hợp thu đông, dễ layer nhiều phong cách.",colors:[["Be","#d8c3a5"],["Xám","#9aa0a6"],["Đen","#232323"]]},
+{id:11,cat:"nam",type:"ao",name:"Áo Vest Nam 2 Nút",price:1032000,old:1290000,sale:20,mat:"Vải suit poly đứng form",org:"Việt Nam",img:"https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=70",desc:"Vest lên form chuẩn vai ép nhẹ, cài 2 nút sang trọng. Lót trong thoáng — chọn lựa cho buổi quan trọng.",colors:[["Đen","#232323"],["Xanh đen","#1f2a44"],["Xám","#9aa0a6"]]},
+{id:12,cat:"nam",type:"ao",name:"Áo Khoác Denim Nam",price:599000,old:749000,sale:20,mat:"Denim bền chắc",org:"Việt Nam",img:"https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&w=600&q=70",desc:"Áo khoác denim cứng cáp, khóa kim loại bền. Lớp áo phong cách đường phố phối được gần như mọi outfit.",colors:[["Xanh chàm","#3b5f8a"],["Đen","#232323"]]},
+{id:13,cat:"nam",type:"quanNam",name:"Quần Tây Nam Vải Âm",price:439000,old:549000,sale:20,mat:"Vải âm suitng",org:"Việt Nam",img:"https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&w=600&q=70",desc:"Quần tây vải âm đứng form, ống suông nhẹ, lót trong thoáng mát. Chuẩn công sở, phối sơ mi hoặc polo đều đẹp.",colors:[["Đen","#232323"],["Xám","#9aa0a6"],["Be","#d8c3a5"]]},
+{id:14,cat:"nam",type:"ao",name:"Set Áo Thun + Quần Nỉ Nam",price:319000,old:399000,sale:20,mat:"Cotton êm",org:"Việt Nam",img:"https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=600&q=70",desc:"Set đồng bộ áo + quần nỉ cotton êm ái. Mặc nhà hay ra phố đều tiện lợi, mua set tiết kiệm 20%.",colors:[["Xám","#9aa0a6"],["Đen","#232323"],["Navy","#23345e"]]},
+{id:15,cat:"nam",type:"ao",name:"Áo Nỉ Nam Sweater Cổ Tròn",price:343000,old:429000,sale:20,mat:"Nỉ bông dày",org:"Việt Nam",img:"https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=600&q=70",desc:"Sweater nỉ bông dày dặn, cổ tròn cơ bản. Phối quần jeans là có ngay outfit hoàn hảo không cần suy nghĩ.",colors:[["Đen","#232323"],["Kem","#f4ead8"],["Xám","#9aa0a6"]]},
+/* ----- NỮ (16-30) ----- */
+{id:16,cat:"nu",type:"vay",name:"Váy Body Nữ Ôm Dáng",price:287000,old:359000,sale:20,mat:"Cotton scuba co giãn",org:"Việt Nam",img:"https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=600&q=70",desc:"Váy body cotton scuba ôm nhẹ đường cong vẫn thoải mái. Dài trên gối, hợp đi chơi, hẹn hò, dễ phối áo khoác.",colors:[["Đen","#232323"],["Đỏ","#c0392b"],["Hồng","#f1a7c0"]]},
+{id:17,cat:"nu",type:"vay",name:"Đầm Midi Hoa Nữ Tiểu Thư",price:367000,old:459000,sale:20,mat:"Voan lụa + lót trong",org:"Việt Nam",img:"https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&w=600&q=70",desc:"Đầm midi hoa voan lụa nhẹ nhàng, tay phồng tiểu thư, eo chun dáng xòe xinh xắn. Hợp đi chơi và dự tiệc.",colors:[["Hồng","#f1a7c0"],["Xanh lá","#3e8e5f"],["Kem","#f4ead8"]]},
+{id:18,cat:"nu",type:"aoNu",name:"Áo Blazer Nữ Công Sở",price:479000,old:599000,sale:20,mat:"Kaki poly đứng form",org:"Việt Nam",img:"https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=600&q=70",desc:"Blazer form chuẩn vai nhún, túi thật sang trọng. Mặc một mình hoặc layer cùng áo cơm, quần tây đều sang.",colors:[["Đen","#232323"],["Be","#d8c3a5"],["Trắng","#ffffff"]]},
+{id:19,cat:"nu",type:"quanNu",name:"Quần Jeans Nữ Cạp Cao",price:359000,old:449000,sale:20,mat:"Denim co giãn 97/3",org:"Việt Nam",img:"https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=600&q=70",desc:"Jeans cạp cao co giãn che khuyết điểm bụng hông, tôn chân dài. Ống suông nhẹ hợp nhiều dáng người.",colors:[["Xanh chàm","#3b5f8a"],["Đen","#232323"],["Trắng","#ffffff"]]},
+{id:20,cat:"nu",type:"vay",name:"Chân Váy A-Line Nữ",price:263000,old:329000,sale:20,mat:"Kaki Teensoft",org:"Việt Nam",img:"https://images.unsplash.com/photo-1583496661160-fb5886a13d44?auto=format&fit=crop&w=600&q=70",desc:"Chân váy chữ A xòe nhẹ che khuyết điểm hông đùi. Kaki teensoft đứng form, túi trước + khóa sau tiện dụng.",colors:[["Đen","#232323"],["Be","#d8c3a5"],["Navy","#23345e"]]},
+{id:21,cat:"nu",type:"aoNu",name:"Áo Crop Top Nữ Cá Tính",price:142000,old:189000,sale:25,mat:"Cotton 220gsm",org:"Việt Nam",img:"https://images.unsplash.com/photo-1571945153237-4929e783af4a?auto=format&fit=crop&w=600&q=70",desc:"Crop top cotton dày không xù, in bền màu. Cá tính, mix chân váy hoặc jeans cạp cao đều hợp.",colors:[["Trắng","#ffffff"],["Đen","#232323"],["Hồng","#f1a7c0"]]},
+{id:22,cat:"nu",type:"vay",name:"Váy Maxi Dài Nữ Bay Bổng",price:423000,old:529000,sale:20,mat:"Lụa mềm (silky)",org:"Vải nhập Hàn Quốc",img:"https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=600&q=70",desc:"Maxi dài qua mắt cá, lụa mềm rủ bay bổng, dây buộc chỉnh eo. Hoàn hảo cho đi biển, dự tiệc, chụp ảnh.",colors:[["Kem","#f4ead8"],["Hồng","#f1a7c0"],["Xanh dương","#4a7fd4"]]},
+{id:23,cat:"nu",type:"quanNu",name:"Quần Tây Nữ Ống Suông",price:311000,old:389000,sale:20,mat:"Vải vân gỗ (suiting)",org:"Việt Nam",img:"https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=600&q=70",desc:"Quần tây vân gỗ cúi cao ống suông, hiệu ứng chân dài. Đi làm, đi học, đi chơi đều lịch sự.",colors:[["Đen","#232323"],["Be","#d8c3a5"],["Xám","#9aa0a6"]]},
+{id:24,cat:"nu",type:"aoNu",name:"Hoodie Nữ Oversized Hàn Quốc",price:322000,old:429000,sale:25,mat:"Nỉ bông cotton 330gsm",org:"Việt Nam",img:"https://images.unsplash.com/photo-1602293589930-45aad59ba3ab?auto=format&fit=crop&w=600&q=70",desc:"Hoodie oversize nỉ bông ấm áp, thả dáng nhẹ kiểu Hàn. Phối legging, chân váy hoặc jeans cực xinh.",colors:[["Trắng","#ffffff"],["Hồng","#f1a7c0"],["Xám","#9aa0a6"],["Be","#d8c3a5"]]},
+{id:25,cat:"nu",type:"vay",name:"Đầm Công Sở Nữ Đứng Form",price:447000,old:559000,sale:20,mat:"Poly đứng form",org:"Việt Nam",img:"https://images.unsplash.com/photo-1539008835657-9e8e9680c956?auto=format&fit=crop&w=600&q=70",desc:"Đầm suông nhẹ đứng form, tay dài lịch sự. Đi làm, gặp đối tác tự tin — item công sở đáng đầu tư.",colors:[["Đen","#232323"],["Đỏ đô","#7b2d26"],["Navy","#23345e"]]},
+{id:26,cat:"nu",type:"aoNu",name:"Áo Sơ Mi Nữ Trắng",price:255000,old:319000,sale:20,mat:"Cotton mềm ít nhăn",org:"Việt Nam",img:"https://images.unsplash.com/photo-1604176354204-9268737828e4?auto=format&fit=crop&w=600&q=70",desc:"Sơ mi trắng basic mix được mọi outfit. Vải mềm thoáng, ít nhăn, tự tin cả ngày dài.",colors:[["Trắng","#ffffff"],["Trắng kem","#f7f3e8"]]},
+{id:27,cat:"nu",type:"vay",name:"Chân Váy Jeans Nữ",price:279000,old:349000,sale:20,mat:"Denim cứng cáp",org:"Việt Nam",img:"https://images.unsplash.com/photo-1544022613-e87ca75a784a?auto=format&fit=crop&w=600&q=70",desc:"Chân váy denim dáng chữ A trẻ trung, khóa sau gọn gàng. Dễ phối áo thun, sơ mi, croptop.",colors:[["Xanh chàm","#3b5f8a"],["Đen","#232323"]]},
+{id:28,cat:"nu",type:"aoNu",name:"Áo Len Dệt Kim Nữ",price:295000,old:369000,sale:20,mat:"Len mềm mịn",org:"Việt Nam",img:"https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=600&q=70",desc:"Áo len mềm mịn không gait, tông pastel nhẹ nhàng. Giữ ấm mùa lạnh mà vẫn thời trang.",colors:[["Hồng","#f1a7c0"],["Kem","#f4ead8"],["Xanh mint","#9fd8cb"]]},
+{id:29,cat:"nu",type:"quanNu",name:"Quần Shorts Nữ Trẻ Trung",price:191000,old:239000,sale:20,mat:"Cotton co giãn",org:"Việt Nam",img:"https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=600&q=70",desc:"Shorts nữ cotton co giãn, cúi vừa vặn. Đi chơi, thể thao thoải mái, năng động mỗi ngày.",colors:[["Be","#d8c3a5"],["Đen","#232323"],["Trắng","#ffffff"]]},
+{id:30,cat:"nu",type:"aoNu",name:"Áo Khoác Dạ Nữ Sang Trọng",price:639000,old:799000,sale:20,mat:"Dạ dày giữ ấm",org:"Việt Nam",img:"https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=600&q=70",desc:"Áo khoác dạ dày dặn giữ ấm tốt, cut sang trọng. Item đắt giá cho mùa đông, mặc là nổi bật.",colors:[["Đen","#232323"],["Be","#d8c3a5"],["Đỏ đô","#7b2d26"]]}
+];
+
+const NEW_IDS =[10,11,12,25,29,30];
+const HOT_IDS =[2,3,7,18,19,23];
+const SALE_IDS=[1,4,7,10,12,13,15,16,19,21,24,27,28,29,30];  /* 15 SP khuyến mãi */
+
+/* Bảng size theo loại sản phẩm */
+const SIZE_TABLES={
+ ao:{ten:"Bảng size ÁO (cm)",cols:["Size","Vòng ngực","Dài áo","Cân nặng (kg)"],
+   rows:[["S","92","66","45–52"],["M","96","68","52–60"],["L","100","70","60–67"],["XL","104","72","67–75"],["XXL","108","74","75–83"]]},
+ jogger:{ten:"Bảng size QUẦN JOGGER (cm)",cols:["Size","Vòng eo","Dài quần","Cân nặng (kg)"],
+   rows:[["S","70–74","98","45–52"],["M","75–79","100","52–60"],["L","80–84","102","60–67"],["XL","85–89","104","67–75"],["XXL","90–94","106","75–83"]]},
+ quanNam:{ten:"Bảng size QUẦN NAM (cm)",cols:["Size","Vòng eo","Vòng hông","Dài quần"],
+   rows:[["28","70","90","98"],["29","73","92","99"],["30","76","94","100"],["31","79","96","101"],["32","82","98","102"],["33","85","100","103"],["34","88","102","104"]]},
+ quanNu:{ten:"Bảng size QUẦN NỮ (cm)",cols:["Size","Vòng eo","Vòng hông","Dài quần"],
+   rows:[["S","62–65","88–91","97"],["M","66–69","92–95","98"],["L","70–73","96–99","99"],["XL","74–77","100–103","100"]]},
+ vay:{ten:"Bảng size VÁY / ĐẦM (cm)",cols:["Size","Vòng ngực","Vòng eo","Dài váy"],
+   rows:[["S","82–84","62–64","85–90"],["M","86–88","66–68","88–95"],["L","90–92","70–72","91–100"]]},
+ aoNu:{ten:"Bảng size ÁO NỮ (cm)",cols:["Size","Vòng ngực","Vòng eo","Dài áo"],
+   rows:[["S","82–84","62–64","56"],["M","86–88","66–68","58"],["L","90–92","70–72","60"],["XL","94–96","74–76","62"]]}
+};
+const SIZES_OF={ao:["S","M","L","XL","XXL"],jogger:["S","M","L","XL","XXL"],quanNam:["28","29","30","31","32","33","34"],quanNu:["S","M","L","XL"],vay:["S","M","L"],aoNu:["S","M","L","XL"]};
+
+const money=n=>n.toLocaleString('vi-VN')+'đ';
+const byId=id=>PRODUCTS.find(p=>p.id===id);
+const code=id=>'CIM-'+String(id).padStart(3,'0');
+/* 4 ảnh chi tiết: cùng 1 ảnh gốc nhưng crop khác nhau (entropy / faces / edges) */
+function galleryOf(p){
+  const b=p.img.replace('w=600','w=900');
+  return [b, b+'&crop=entropy', b+'&crop=faces', b+'&crop=edges'];
+}
+
+/* ---------- CHUYỂN MÀN HÌNH ---------- */
+function showView(v){
+  ['Home','Detail','Cart','Order'].forEach(x=>
+    document.getElementById('view'+x).classList.toggle('hidden', x.toLowerCase()!==v));
+  if(v==='cart')displayCart();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function gotoSection(id){
+  showView('home');
+  setTimeout(()=>document.getElementById(id).scrollIntoView({behavior:'smooth'}),60);
+}
+function showOrder(){renderOrder();showView('order');}
+
+/* ---------- PRODUCTCARD (bấm được vào chi tiết) ---------- */
+function productCard(p){
+  return `<div class="productCard">
+    <img src="${p.img}" alt="${p.name}" loading="lazy" onclick="openDetail(${p.id})"
+         onerror="this.onerror=null;this.src='https://picsum.photos/seed/cim${p.id}/600/750'">
+    <span class="saleTag">-${p.sale}%</span>
+    <div class="cardName" onclick="openDetail(${p.id})">${p.name}</div>
+    <small style="color:#9ca3af">Mã: ${code(p.id)} · ${p.cat==='nam'?'Nam':'Nữ'} · Size ${SIZES_OF[p.type].join(',')}</small>
+    <p class="pDesc">${p.desc}</p>
+    <div class="pPrice"><span class="pOld">${money(p.old)}</span><span class="pNew">${money(p.price)}</span></div>
+    <button class="buyBtn" onclick="quickAdd(${p.id})">Buy Now</button>
+    <div class="iconBox">
+      <span title="Thả tim" onclick="toggleIcon(this,'tym')">🤍</span>
+      <span title="Thích" onclick="toggleIcon(this,'like')">👍</span>
+      <span title="Xem chi tiết" onclick="openDetail(${p.id})">👁️</span>
+      <span title="Thêm giỏ hàng" onclick="quickAddIcon(${p.id})">🛒</span>
+    </div>
+  </div>`;
+}
+function renderSection(id,list){const el=document.getElementById(id);if(el)el.innerHTML=list.map(productCard).join('');}
+function renderAll(){
+  renderSection('newContainer',  NEW_IDS.map(byId));
+  renderSection('hotContainer',  HOT_IDS.map(byId));
+  renderSection('saleContainer', SALE_IDS.map(byId));
+  renderSection('menContainer',  PRODUCTS.filter(p=>p.cat==='nam'));
+  renderSection('womenContainer',PRODUCTS.filter(p=>p.cat==='nu'));
+  renderSection('allContainer',  PRODUCTS);
+}
+
+/* ============================================================
+   TRANG CHI TIẾT SẢN PHẨM (gallery + màu + size + số lượng)
+============================================================ */
+let curP=null, curColor='', curSize='', curQty=1;
+function openDetail(id){
+  curP=byId(id);
+  curColor=curP.colors[0][0];
+  curSize =SIZES_OF[curP.type][0];
+  curQty=1;
+  renderDetail();
+  showView('detail');
+}
+function renderDetail(){
+  const p=curP, g=galleryOf(p), st=SIZE_TABLES[p.type];
+  document.getElementById('dBreadcrumb').textContent=p.name;
+  document.getElementById('detailBody').innerHTML=`
+  <div class="detailWrap">
+    <!-- GALLERY 4 ẢNH -->
+    <div class="dGallery">
+      <div class="dMain">
+        <img id="dMainImg" src="${g[0]}" alt="${p.name}"
+             onerror="this.onerror=null;this.src='https://picsum.photos/seed/cim${p.id}/600/800'">
+        <span class="saleTag">-${p.sale}%</span>
+      </div>
+      <div class="dThumbs" id="dThumbs">
+        ${g.map((src,i)=>`<img src="${src}" class="${i===0?'active':''}" onclick="setMainImg(this,'${src}')"
+             onerror="this.onerror=null;this.src='https://picsum.photos/seed/cim${p.id}t${i}/200/260'">`).join('')}
+      </div>
+    </div>
+
+    <!-- THÔNG TIN -->
+    <div class="dInfo">
+      <a class="dBack" onclick="showView('home')">← Quay lại trang chủ</a>
+      <h1>${p.name}</h1>
+      <p class="dCode">Mã sản phẩm: <b>${code(p.id)}</b> · ${p.cat==='nam'?'Thời trang Nam':'Thời trang Nữ'}</p>
+      <p class="dStars">⭐⭐⭐⭐⭐ <i style="color:#9ca3af">(4.8/5 — 126 đánh giá)</i> · ✅ Còn hàng</p>
+
+      <div class="dPriceBox">
+        <span class="pNew">${money(p.price)}</span>
+        <span class="pOld">${money(p.old)}</span>
+        <span class="dTagSale">Giảm ${p.sale}%</span>
+        <p style="margin-top:6px;font-size:.9rem;color:#b02a37">⏰ Khuyến mãi 01/12/2025 → 31/12/2025</p>
+      </div>
+
+      <p class="dDesc">${p.desc}</p>
+      <table class="dTable">
+        <tr><th>Chất liệu</th><td>${p.mat}</td></tr>
+        <tr><th>Xuất xứ</th><td>${p.org}</td></tr>
+        <tr><th>Tình trạng</th><td style="color:#15803d"><b>✔ Còn hàng</b></td></tr>
+      </table>
+
+      <label class="optLabel">Màu sắc: <span id="dColorName" style="color:#c96a00">${curColor}</span></label>
+      <div class="chips" id="dColorChips">
+        ${p.colors.map((c,i)=>`<button class="chip ${i===0?'active':''}" onclick="pickColor('${c[0]}',this)">
+          <i class="dot" style="background:${c[1]}"></i>${c[0]}</button>`).join('')}
+      </div>
+
+      <label class="optLabel">Kích thước (Size): <span id="dSizeName" style="color:#c96a00">${curSize}</span>
+        <a class="sizeLink" onclick="toggleSizeTable()">📋 Xem bảng size</a></label>
+      <div class="chips" id="dSizeChips">
+        ${SIZES_OF[p.type].map((s,i)=>`<button class="chip ${i===0?'active':''}" onclick="pickSize('${s}',this)">${s}</button>`).join('')}
+      </div>
+      <div id="dSizeTable" class="sizeTableBox hidden">
+        <h4 style="margin-bottom:8px">${st.ten}</h4>
+        <table><thead><tr>${st.cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead>
+          <tbody>${st.rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table>
+      </div>
+
+      <div class="buyRow">
+        <div class="qtyGroup">
+          <button onclick="dQty(-1)">−</button><input id="dQty" value="1" readonly><button onclick="dQty(1)">+</button>
+        </div>
+        <button class="dBtnCart btnBuy1" onclick="detailAdd(false)">🛒 Thêm vào giỏ hàng</button>
+        <button class="dBtnCart btnBuy2" onclick="detailAdd(true)">⚡ Mua ngay</button>
+      </div>
+
+      <div class="dMinis">
+        <span>🚚 Giao hàng toàn quốc 1–4 ngày</span>
+        <span>🔄 Đổi trả trong 7 ngày</span>
+        <span>✅ Kiểm tra hàng trước khi thanh toán</span>
+        <span>📞 Mua nhanh: <b>0901 234 567</b></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SẢN PHẨM LIÊN QUAN -->
+  <section class="productSection">
+    <h2 class="sectionTitle">🔎 Sản phẩm liên quan</h2>
+    <div class="productContainer" id="relContainer"></div>
+  </section>`;
+
+  const rel=PRODUCTS.filter(x=>x.cat===p.cat&&x.id!==p.id).slice(0,4);
+  document.getElementById('relContainer').innerHTML=rel.map(productCard).join('');
+}
+function setMainImg(el,src){
+  document.getElementById('dMainImg').src=src;
+  document.querySelectorAll('#dThumbs img').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
+function pickColor(c,el){curColor=c;document.getElementById('dColorName').textContent=c;
+  el.parentElement.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));el.classList.add('active');}
+function pickSize(s,el){curSize=s;document.getElementById('dSizeName').textContent=s;
+  el.parentElement.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));el.classList.add('active');}
+function toggleSizeTable(){document.getElementById('dSizeTable').classList.toggle('hidden');}
+function dQty(d){curQty=Math.max(1,Math.min(99,curQty+d));document.getElementById('dQty').value=curQty;}
+function detailAdd(goCart){
+  pushCart(curP,curColor,curSize,curQty);
+  if(goCart)showView('cart');
+  else showToast(`✅ Đã thêm <b>${curP.name}</b> [${curColor} · Size ${curSize}] × ${curQty} vào giỏ hàng!`);
+}
+/* Card: Buy Now & icon giỏ → thêm màu/size mặc định */
+function quickAdd(id){const p=byId(id);pushCart(p,p.colors[0][0],SIZES_OF[p.type][0],1);showView('cart');}
+function quickAddIcon(id){const p=byId(id);pushCart(p,p.colors[0][0],SIZES_OF[p.type][0],1);
+  showToast(`✅ Đã thêm <b>${p.name}</b> vào giỏ hàng!`);}
+
+/* ---------- GIỎ HÀNG — key 'prodcutIn4' ---------- */
+const getCart=()=>JSON.parse(localStorage.getItem('prodcutIn4')||'[]');
+const saveCart=c=>{localStorage.setItem('prodcutIn4',JSON.stringify(c));updateCartNav();};
+function updateCartNav(){document.getElementById('cartNavCount').textContent=getCart().reduce((s,i)=>s+i.amount,0);}
+function pushCart(p,color,size,amount){
+  const c=getCart(),key=p.name+'|'+color+'|'+size;
+  const f=c.find(i=>i.key===key);
+  if(f)f.amount+=amount;
+  else c.push({key:key,name:p.name,code:code(p.id),price:p.price,img:p.img,color:color,size:size,amount:amount});
+  saveCart(c);
+}
+function displayCart(){
+  const cart=getCart(),box=document.getElementById('cartContent'),btn=document.getElementById('checkoutBtn');
+  if(!cart.length){
+    box.innerHTML='<p class="emptyCart">🛒 Giỏ hàng của bạn đang trống</p>';
+    document.getElementById('cartTotals').innerHTML='';btn.disabled=true;return;
+  }
+  btn.disabled=false;
+  box.innerHTML=`<div style="overflow-x:auto"><table class="cart-table">
+    <thead><tr><th>Sản phẩm</th><th>Màu / Size</th><th>Giá gốc</th><th>Giảm 20%</th>
+    <th>Số lượng</th><th>Thành tiền</th><th>Xóa</th></tr></thead>
+    <tbody>${cart.map((i,idx)=>{
+      const disc=i.price*0.2,it=(i.price-disc)*i.amount;
+      return `<tr>
+        <td><div class="cart-prod"><img src="${i.img}" alt="${i.name}"><div><b>${i.name}</b><br><small>${i.code}</small></div></div></td>
+        <td>${i.color} / <b>${i.size}</b></td>
+        <td>${money(i.price)}</td>
+        <td style="color:#15803d">-${money(disc*i.amount)}</td>
+        <td><div style="display:inline-flex;align-items:center;gap:6px">
+          <button class="qtyBtn" onclick="changeAmount(${idx},-1)">−</button>
+          <span class="qtyNum">${i.amount}</span>
+          <button class="qtyBtn" onclick="changeAmount(${idx},1)">+</button></div></td>
+        <td><b style="color:#ff9800">${money(it)}</b></td>
+        <td><button class="delete-btn" onclick="deleteItem(${idx})">Xoá</button></td></tr>`;
+    }).join('')}</tbody></table></div>`;
+  updateTotals();
+}
+function updateTotals(){
+  const cart=getCart();
+  const sub =cart.reduce((s,i)=>s+i.price*i.amount,0);
+  const disc=cart.reduce((s,i)=>s+i.price*0.2*i.amount,0);
+  const ship=cart.length?shippingFee:0;
+  const total=sub-disc+ship;
+  document.getElementById('cartTotals').innerHTML=`
+    <div class="totRow"><span>Tạm tính</span><span>${money(sub)}</span></div>
+    <div class="totRow"><span>Giảm giá 20%</span><span style="color:#15803d">-${money(disc)}</span></div>
+    <div class="totRow"><span>Phí vận chuyển</span><span>${ship?money(ship):'<b style="color:#15803d">Miễn phí</b>'}</span></div>
+    <div class="totRow grand"><span>TỔNG CỘNG</span><span>${money(total)}</span></div>`;
+  return{sub,disc,ship,total};
+}
+function changeAmount(idx,d){
+  const c=getCart();c[idx].amount=Math.max(1,c[idx].amount+d);
+  saveCart(c);displayCart();
+}
+function deleteItem(idx){
+  if(!confirm('Xoá sản phẩm này khỏi giỏ hàng?'))return;
+  const c=getCart();c.splice(idx,1);saveCart(c);displayCart();
+  showToast('🗑️ Đã xoá sản phẩm khỏi giỏ hàng');
+}
+
+/* ---------- SHIP / GPS / VALIDATE / CHECKOUT ---------- */
+let shippingFee=20000;
+function updateShippingMethod(){
+  const home=document.querySelector('input[name="ship"]:checked').value==='home';
+  shippingFee=home?20000:0;
+  document.getElementById('addressBlock').style.display=home?'block':'none';
+  updateTotals();
+}
+function getLocation(){
+  if(!navigator.geolocation)return alert('❌ Trình duyệt không hỗ trợ định vị!');
+  showToast('📡 Đang lấy vị trí GPS...');
+  navigator.geolocation.getCurrentPosition(p=>{
+    document.getElementById('custAddress').value=
+      `Lat: ${p.coords.latitude.toFixed(6)}, Lng: ${p.coords.longitude.toFixed(6)}`;
+    showToast('✅ Đã điền tọa độ GPS vào ô địa chỉ!');
+  },()=>alert('❌ Không lấy được vị trí. Vui lòng nhập thủ công.'));
+}
+function validate(){
+  const name=document.getElementById('custName').value.trim();
+  const phone=document.getElementById('custPhone').value.trim();
+  const note=document.getElementById('custNote').value.trim();
+  const home=document.querySelector('input[name="ship"]:checked').value==='home';
+  if(!/^[\p{L}\s]{2,}$/u.test(name)){alert('⚠️ Họ tên chỉ gồm chữ cái và khoảng trắng!');return false;}
+  if(!/^0\d{9,10}$/.test(phone)){alert('⚠️ SĐT phải bắt đầu bằng 0, theo sau 9-10 chữ số!');return false;}
+  if(home){
+    const addr=document.getElementById('custAddress').value.trim();
+    if(addr.length<10||addr.length>100){alert('⚠️ Địa chỉ phải từ 10–100 ký tự!');return false;}
+  }
+  if(note.length>200){alert('⚠️ Ghi chú tối đa 200 ký tự!');return false;}
+  return true;
+}
+function checkout(){
+  if(!getCart().length){alert('❌ Giỏ hàng đang trống, không thể thanh toán!');return;}
+  if(!validate())return;
+  const t=updateTotals();
+  const home=document.querySelector('input[name="ship"]:checked').value==='home';
+  const orderInfo={
+    items:getCart(),
+    shipping:home?'Giao tận nhà (+20.000đ)':'Nhận tại cửa hàng (Miễn phí)',
+    total:t.total,
+    customerInfo:{
+      name:document.getElementById('custName').value.trim(),
+      phone:document.getElementById('custPhone').value.trim(),
+      address:home?document.getElementById('custAddress').value.trim():'Nhận tại cửa hàng — 45 Lê Lợi, Q.1, TP.HCM',
+      note:document.getElementById('custNote').value.trim()
+    }
+  };
+  localStorage.setItem('orderInfo',JSON.stringify(orderInfo));
+  localStorage.removeItem('prodcutIn4');
+  alert('✅ Đặt hàng thành công! Tổng tiền: '+money(t.total));
+  renderOrder();showView('order');
+}
+function renderOrder(){
+  const o=JSON.parse(localStorage.getItem('orderInfo')||'null');
+  const box=document.getElementById('orderDetail');
+  if(!o){box.innerHTML='<p class="emptyCart">Chưa có đơn hàng nào. Hãy mua sắm trước nhé!</p>';return;}
+  const sub =o.items.reduce((s,i)=>s+i.price*i.amount,0);
+  const disc=o.items.reduce((s,i)=>s+i.price*0.2*i.amount,0);
+  const ship=o.total-(sub-disc);
+  box.innerHTML=`<div class="checkoutBox">
+    <h2>👤 Thông tin khách hàng</h2>
+    <p><b>${o.customerInfo.name}</b> — 📞 ${o.customerInfo.phone}</p>
+    <p>📍 ${o.customerInfo.address}</p>
+    ${o.customerInfo.note?`<p>📝 Ghi chú: ${o.customerInfo.note}</p>`:''}
+    <p>🚚 Phương thức: ${o.shipping}</p>
+    <h2 style="margin-top:20px">📦 Chi tiết đơn hàng</h2>
+    <div style="overflow-x:auto"><table class="cart-table">
+      <thead><tr><th>Sản phẩm</th><th>Màu / Size</th><th>Đơn giá</th><th>SL</th><th>Thành tiền</th></tr></thead>
+      <tbody>${o.items.map(i=>`<tr>
+        <td><div class="cart-prod"><img src="${i.img}" alt="${i.name}"><div><b>${i.name}</b><br><small>${i.code}</small></div></div></td>
+        <td>${i.color} / ${i.size}</td>
+        <td>${money(i.price)}</td><td>${i.amount}</td>
+        <td><b>${money((i.price-i.price*0.2)*i.amount)}</b></td></tr>`).join('')}</tbody>
+    </table></div>
+    <div class="cart-totals">
+      <div class="totRow"><span>Tạm tính</span><span>${money(sub)}</span></div>
+      <div class="totRow"><span>Giảm giá 20%</span><span style="color:#15803d">-${money(disc)}</span></div>
+      <div class="totRow"><span>Phí vận chuyển</span><span>${ship>0?money(ship):'<b style="color:#15803d">Miễn phí</b>'}</span></div>
+      <div class="totRow grand"><span>TỔNG THANH TOÁN</span><span>${money(o.total)}</span></div>
+    </div>
+    <button class="checkoutBtn" onclick="localStorage.removeItem('orderInfo');showView('home')">✔ HOÀN TẤT — VỀ TRANG CHỦ</button>
+  </div>`;
+}
+
+/* ---------- MODAL / TOAST ---------- */
+function openModal(id){document.getElementById(id).style.display='flex';}
+function closeModal(id){document.getElementById(id).style.display='none';}
+window.addEventListener('click',e=>{if(e.target.classList.contains('modal'))e.target.style.display='none';});
+function showToast(m){const t=document.getElementById('toast');t.innerHTML=m;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2400);}
+
+/* ---------- ĐĂNG KÝ / ĐĂNG NHẬP ---------- */
+let users=[];
+document.getElementById('registerForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const u=document.getElementById('regUser').value.trim();
+  const em=document.getElementById('regEmail').value.trim();
+  const p=document.getElementById('regPass').value;
+  const c=document.getElementById('regConfirm').value;
+  if(!u)return alert('⚠️ Vui lòng nhập tên đăng nhập!');
+  if(!em)return alert('⚠️ Vui lòng nhập email!');
+  if(!em.includes('@')||!em.includes('.'))return alert('⚠️ Email không hợp lệ (phải chứa "@" và ".")!');
+  if(!p)return alert('⚠️ Vui lòng nhập mật khẩu!');
+  if(p.length<6)return alert('⚠️ Mật khẩu phải có ít nhất 6 ký tự!');
+  if(p!==c)return alert('⚠️ Xác nhận mật khẩu không khớp!');
+  users.push({username:u,password:p,email:em});
+  alert('✅ Đăng ký thành công!');
+  e.target.reset();closeModal('registerModal');
+});
+document.getElementById('loginForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const u=document.getElementById('loginUser').value.trim();
+  const p=document.getElementById('loginPass').value;
+  if(!u||!p)return alert('⚠️ Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!');
+  const f=users.find(x=>x.username===u);
+  if(!f)return alert('❌ Không tìm thấy tên đăng nhập này!');
+  if(f.password!==p)return alert('❌ Mật khẩu không đúng!');
+  alert('✅ Đăng nhập thành công! Xin chào '+u);
+  e.target.reset();closeModal('loginModal');
+});
+
+/* ---------- TOGGLE ICON ---------- */
+const ICONS={tym:['🤍','💔'],like:['👍','🔥']};
+function toggleIcon(el,type){
+  el.classList.toggle('active');
+  const on=el.classList.contains('active');
+  if(ICONS[type])el.textContent=on?ICONS[type][1]:ICONS[type][0];
+  if(type==='tym') alert(on?'💖 Bạn đã THẢ TIM sản phẩm này!':'Đã bỏ tim sản phẩm.');
+  if(type==='like')alert(on?'🔥 Bạn đã THÍCH sản phẩm này!':'Đã bỏ thích sản phẩm.');
+}
+
+/* ---------- BANNER SLIDESHOW ---------- */
+const slides=document.querySelectorAll('.bannerSlide');
+let sIdx=0,sTimer=null,sPlaying=true;
+const dotsBox=document.getElementById('bannerDots');
+slides.forEach((_,i)=>{const d=document.createElement('span');d.onclick=()=>goSlide(i);dotsBox.appendChild(d);});
+const dots=dotsBox.querySelectorAll('span');
+function goSlide(i){
+  sIdx=(i+slides.length)%slides.length;
+  slides.forEach((s,k)=>s.classList.toggle('active',k===sIdx));
+  dots.forEach((d,k)=>d.classList.toggle('active',k===sIdx));
+}
+function restart(){clearInterval(sTimer);sTimer=setInterval(()=>goSlide(sIdx+1),4500);}
+function nextSlide(){goSlide(sIdx+1);if(sPlaying)restart();}
+function prevSlide(){goSlide(sIdx-1);if(sPlaying)restart();}
+function toggleSlide(){
+  sPlaying=!sPlaying;
+  document.getElementById('slideToggleBtn').textContent=sPlaying?'⏸':'▶';
+  sPlaying?restart():clearInterval(sTimer);
+  showToast(sPlaying?'▶ Banner tiếp tục chạy':'⏸ Banner đã dừng');
+}
+goSlide(0);restart();
+
+/* ---------- STATS ---------- */
+function countUp(el,target){
+  let cur=0;const step=target/60;
+  const t=setInterval(()=>{cur+=step;
+    if(cur>=target){cur=target;clearInterval(t);}
+    el.textContent=Math.floor(cur).toLocaleString('vi-VN');},20);
+}
+(function initStats(){
+  countUp(document.getElementById('statCust'),12847);
+  countUp(document.getElementById('statOrder'),35692);
+  const on=document.getElementById('statOnline');
+  const tick=()=>on.textContent=(120+Math.floor(Math.random()*180)).toLocaleString('vi-VN');
+  tick();setInterval(tick,3000);
+})();
+
+/* ---------- TÌM KIẾM ---------- */
+function searchProducts(){
+  const q=document.getElementById('searchInput').value.toLowerCase().trim();
+  let n=0;
+  document.querySelectorAll('#allContainer .productCard').forEach(c=>{
+    const ok=!q||c.querySelector('.cardName').textContent.toLowerCase().includes(q);
+    c.style.display=ok?'':'none';if(ok)n++;
+  });
+  document.getElementById('searchResult').textContent=q?`🔎 Tìm thấy ${n}/30 sản phẩm phù hợp với "${q}"`:'';
+}
+
+/* ---------- NHẠC NỀN (Web Audio) ---------- */
+let musicOn=false,audioCtx=null,musicTimer=null,musicAsked=false;
+const MELODY=[[523,0],[587,.4],[659,.8],[784,1.2],[659,1.6],[587,2],[523,2.4],[392,2.8]];
+function startMusic(){
+  audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();
+  if(audioCtx.state==='suspended')audioCtx.resume();
+  musicOn=true;
+  (function loop(){
+    if(!musicOn)return;
+    MELODY.forEach(([f,t])=>{
+      const o=audioCtx.createOscillator(),g=audioCtx.createGain();
+      o.type='triangle';o.frequency.value=f;
+      g.gain.setValueAtTime(.0001,audioCtx.currentTime+t);
+      g.gain.linearRampToValueAtTime(.05,audioCtx.currentTime+t+.05);
+      g.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+t+.38);
+      o.connect(g);g.connect(audioCtx.destination);
+      o.start(audioCtx.currentTime+t);o.stop(audioCtx.currentTime+t+.4);
+    });
+    musicTimer=setTimeout(loop,3600);
+  })();
+  document.getElementById('musicBtn').textContent='🔊';
+  showToast('🎵 Nhạc nền đã bật!');
+}
+function stopMusic(){
+  musicOn=false;clearTimeout(musicTimer);
+  if(audioCtx)audioCtx.suspend();
+  document.getElementById('musicBtn').textContent='🎵';
+  showToast('🔕 Nhạc nền đã tắt');
+}
+function toggleMusicBtn(){musicOn?stopMusic():startMusic();}
+function musicChoice(yes){
+  musicAsked=true;closeModal('musicModal');
+  yes?startMusic():showToast('👌 Bạn có thể bật nhạc bằng nút 🎵 trên thanh menu.');
+}
+window.addEventListener('load',()=>setTimeout(()=>{if(!musicAsked)openModal('musicModal');},1200));
+
+/* ---------- KHỞI ĐỘNG ---------- */
+renderAll();
+updateCartNav();
+</script>
+</body>
+</html>
